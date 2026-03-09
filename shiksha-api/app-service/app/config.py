@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
     app_name: str = "Shiksha Copilot API"
+    build: Optional[str] = None
     version: str = "1.0.1"
     debug: bool = False
     host: str = "0.0.0.0"
