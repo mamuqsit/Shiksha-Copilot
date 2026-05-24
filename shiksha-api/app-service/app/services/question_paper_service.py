@@ -1,4 +1,6 @@
 import json
+from app.services.rag_adapter_cache import RagAdapterCache
+from app.utils.utils import new_rag_embed, new_rag_llm
 from pydantic import BaseModel
 import yaml
 import asyncio
@@ -12,12 +14,9 @@ from openai import AsyncAzureOpenAI
 from openai.types import ResponsesModel
 
 # 2. LlamaIndex Imports (Strictly for RAG Adapter Compatibility)
-from llama_index.llms.azure_openai import AzureOpenAI as LlamaAzureOpenAI
-from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
 from llama_index.core.llms import ChatMessage
 
 # 3. Import only the Factory and Base Adapter
-# DO NOT IMPORT RAG_ADAPTER_CACHE here
 from app.services.rag_adapters import BaseRagAdapter, RagAdapterFactory
 
 from app.models.question_paper import (
@@ -26,7 +25,6 @@ from app.models.question_paper import (
     QuestionBankPartsGenerationRequest,
     QuestionBankResponse,
     QuestionBankMetadata,
-    QuestionDistribution,
     QuestionTypeResponse,
     QuestionType,
     Template,
@@ -59,28 +57,15 @@ class QuestionPaperService:
         self.chat_deployment = settings.azure_openai_deployment_name
         self.embedding_deployment = settings.azure_openai_embed_model
 
-        self._rag_llm = LlamaAzureOpenAI(
-            model=settings.azure_openai_deployment_name,
-            deployment_name=settings.azure_openai_deployment_name,
-            api_key=settings.azure_openai_api_key,
-            api_version=settings.azure_openai_api_version,
-            azure_endpoint=settings.azure_openai_endpoint,
-        )
-        self._rag_embed = AzureOpenAIEmbedding(
-            model=settings.azure_openai_embed_model,
-            deployment_name=settings.azure_openai_embed_model,
-            api_key=settings.azure_openai_api_key,
-            azure_endpoint=settings.azure_openai_endpoint,
-            api_version=settings.azure_openai_api_version,
-        )
-
-        self._adapter_cache: Dict[str, BaseRagAdapter] = {}
-        self._adapter_locks: Dict[str, asyncio.Lock] = {}
+        self._rag_llm = new_rag_llm()
+        self._rag_embed = new_rag_embed()
+        self._rags = RagAdapterCache(RagAdapterFactory.create_adapter)
 
         # Load YAML prompts
         self.prompt_dir = Path(__file__).parent.parent.parent / "prompts"
         self.prompts = self._load_prompts()
         self.max_questions_per_slot = 20
+        self.concurrency = asyncio.Semaphore(5)
 
     def _normalize_string(self, s: str) -> str:
         """Centralized string normalization to collapse whitespace and trim."""
@@ -341,60 +326,6 @@ class QuestionPaperService:
         """Generate format instruction for a specific question type."""
         return f"- For {qtype.name}: {qtype.description}, conform to JSON schema for {qtype}."
 
-    async def _get_or_create_rag_adapter(
-        self, index_path: str
-    ) -> Optional[BaseRagAdapter]:
-        """Get an existing RAG adapter or create and cache a new one.
-        
-        Uses a per-index_path asyncio.Lock to prevent race conditions where
-        concurrent callers with the same path each create and initialize a
-        separate adapter before the cache is populated.
-        """
-        if index_path == "EMPTY_INDEX_PATH_FALLBACK" or not index_path.strip():
-            logger.debug(f"[RAG_ADAPTER] Skipping adapter creation for empty/fallback path: '{index_path}'")
-            return None
-
-        # Fast path: already cached (no lock needed for reads once populated)
-        if index_path in self._adapter_cache:
-            logger.debug(f"[RAG_ADAPTER] Cache HIT for path: {index_path}")
-            return self._adapter_cache[index_path]
-
-        # Ensure a lock exists for this path
-        if index_path not in self._adapter_locks:
-            self._adapter_locks[index_path] = asyncio.Lock()
-
-        async with self._adapter_locks[index_path]:
-            # Re-check inside the lock: another coroutine may have populated the cache
-            # while this one was waiting to acquire it.
-            if index_path in self._adapter_cache:
-                logger.debug(f"[RAG_ADAPTER] Cache HIT (post-lock) for path: {index_path}")
-                return self._adapter_cache[index_path]
-
-            logger.debug(f"[RAG_ADAPTER] Cache MISS | path='{index_path}'")
-
-            # Create the adapter instance
-            adapter = RagAdapterFactory.create_adapter(
-                index_path=index_path,
-                completion_llm=self._rag_llm,
-                embedding_llm=self._rag_embed,
-            )
-
-            # Initialize and download index from blob storage
-            await adapter.initialize()
-
-            try:
-                await adapter.initiate_index()
-            except RuntimeError as e:
-                logger.exception(e)
-                logger.warning("Could not populate RAG adapter, skipping RAG layer.")
-                await adapter.cleanup()
-                return None
-
-            # Populate cache inside the lock so no other waiter re-initializes
-            self._adapter_cache[index_path] = adapter
-
-        return self._adapter_cache[index_path]
-
     async def _generate_questions_batch(
         self, system_prompt: str, slot: Dict[str, Any], rag_adapter: Optional[BaseRagAdapter]
     ) -> list[GeneratedQuestionItem]:
@@ -424,7 +355,7 @@ class QuestionPaperService:
             user_message += "- " + json.dumps(question, ensure_ascii=False) + "\n"
 
         try:
-            if index_path == "EMPTY_INDEX_PATH_FALLBACK" or not rag_adapter:
+            if not rag_adapter:
                 # No Index -> Direct Generation (Zero-Shot)
                 logger.info("Using Direct LLM Generation (No RAG).")
                 response = await self.client.responses.parse(
@@ -447,8 +378,8 @@ class QuestionPaperService:
                     chat_history=chat_history
                 )
                 # chat_with_index returns {"response": str, "source_nodes": list}
-                response_content = response_content["response"]
-                content = response_content.strip("```json").strip("```")
+                content: str = response_content["response"]
+                content = content.strip().removeprefix("```json").removesuffix("```")
                 return GeneratedQuestionItemResponse.model_validate_json(content).items
         except Exception as e:
             logger.exception(e)
@@ -456,15 +387,18 @@ class QuestionPaperService:
 
     async def _generate_questions_batch_async(
         self,
+        index_path: str,
         system_prompt: str,
         slot: Dict[str, Any],
-        rag_adapter: Optional[BaseRagAdapter],
-        delay_seconds: int = 0,
     ) -> list[GeneratedQuestionItem]:
         """Async version of _generate_questions_batch with optional delay."""
-        if delay_seconds > 0:
-            await asyncio.sleep(delay_seconds)
-        return await self._generate_questions_batch(system_prompt, slot, rag_adapter)
+        async with self.concurrency:
+            if index_path == "EMPTY_INDEX_PATH_FALLBACK" or not index_path.strip():
+                logger.debug(f"[RAG_ADAPTER] Skipping adapter creation for empty/fallback path: '{index_path}'")
+                rag_adapter = None
+            else:
+                rag_adapter = await self._rags.get(index_path, self._rag_llm, self._rag_embed)
+            return await self._generate_questions_batch(system_prompt, slot, rag_adapter)
 
     def _organize_questions_into_response(
         self,
@@ -558,27 +492,18 @@ class QuestionPaperService:
         # Prepare existing questions
         existing_flat = self._flatten_existing_questions(request.existing_questions)
 
-        # Process in parallel batches
+        tasks = []
+        for i, slot in enumerate(slots):
+            index_path = slot["index_path"]
+            logger.debug(f"[SLOT_PROCESSING] Slot {i} | unit='{slot['unit_name']}' | index_path='{index_path}'")
+            system_prompt = self._format_system_prompt(request, existing_flat, slot)
+            task = self._generate_questions_batch_async(index_path, system_prompt, slot)
+            tasks.append(task)
+
         all_generated: list[GeneratedQuestionItem] = []
-        batch_size = 3
-
-        for i in range(0, len(slots), batch_size):
-            batch_slots = slots[i : i + batch_size]
-            tasks = []
-            for j, slot in enumerate(batch_slots):
-                index_path = slot["index_path"]
-                logger.debug(f"[SLOT_PROCESSING] Batch {i}, Slot {j} | unit='{slot['unit_name']}' | index_path='{index_path}'")
-                rag_adapter = await self._get_or_create_rag_adapter(index_path)
-                system_prompt = self._format_system_prompt(request, existing_flat, slot)
-                task = self._generate_questions_batch_async(system_prompt, slot, rag_adapter, j * 2)
-                tasks.append(task)
-
-            # Wait for batch
-            batch_results = await asyncio.gather(*tasks)
-
-            for raw_items in batch_results:
-                if raw_items:
-                    all_generated.extend(raw_items)
+        for raw_items in await asyncio.gather(*tasks):
+            if raw_items:
+                all_generated.extend(raw_items)
 
         response_questions = self._organize_questions_into_response(request, all_generated)
         return QuestionBankResponse(metadata=QuestionBankMetadata(
@@ -591,12 +516,8 @@ class QuestionPaperService:
         ), questions=response_questions)
 
 
-    async def cleanup(self) -> None:
-        """Clear the internal RAG adapter cache and resources."""
-        # Cleanup all adapters in local cache
-        for adapter in self._adapter_cache.values():
-             await adapter.cleanup()
-        self._adapter_cache.clear()
+    async def cleanup(self):
+        await self._rags.cleanup()
 
     async def get_question_distribution(
         self,
