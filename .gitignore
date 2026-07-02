@@ -24,3 +24,7 @@ cover/
 */.env
 tests/tests-env
 **/__pycache__/
+
+# Accessibility tests
+**/node_modules
+**/results

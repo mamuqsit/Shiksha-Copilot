@@ -53,14 +53,15 @@ jobs:
   cicd-frontend:
     name: Deploy frontend
     needs: cd-backend
-    if: (github.event_name == 'pull_request' && github.base_ref == 'a4i/staging') || (github.event_name == 'push' && github.ref_name == 'a4i/staging')
+    if: always() && ((github.event_name == 'pull_request' && github.base_ref == 'a4i/staging') || (github.event_name == 'push' && github.ref_name == 'a4i/staging' && needs.cd-backend.result == 'success'))
     uses: ./.github/workflows/cicd-frontend.yaml
     secrets: inherit
     with:
       deploy_name: shiksha-frontend-staging
-      deploy_target: ${{ needs.cd-backend.result == 'success' && 'github-pages' || '' }}
+      deploy_target: ${{ (github.event_name == 'pull_request' || needs.cd-backend.result == 'success') && 'github-pages' || '' }}
       environment: uat
       api_url: ${{ needs.cd-backend.result == 'success' && format('{0}/api', needs.cd-backend.outputs['service-url']) || '' }}
+      pages_subdir: ${{ github.event_name == 'pull_request' && github.head_ref || '' }}
 
   cd-api-prod:
     name: Deploy api
@@ -226,10 +227,80 @@ jobs:
           name: k6-summary
           path: k6_summary.json
 
+  accessibility-tests:
+    name: Accessibility Tests
+    needs: [cicd-frontend, health-check]
+    if: |
+      always() &&
+      github.event_name == 'pull_request' && github.base_ref == 'a4i/staging' &&
+      needs.cicd-frontend.result == 'success' &&
+      (needs.health-check.result == 'success' || needs.health-check.result == 'skipped')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci --prefix tests/accessibility
+
+      - name: Install Playwright browsers
+        run: npx --prefix tests/accessibility playwright install chromium --with-deps
+
+      - name: Run Accessibility Tests
+        continue-on-error: true
+        env:
+          FRONTEND_URL: ${{ needs.cicd-frontend.outputs.page_url }}
+          TEST_USER_PHONE: ${{ secrets.TEST_USER_PHONE }}
+          TEST_USER_OTP: ${{ secrets.TEST_USER_OTP }}
+          TEST_ADMIN_PHONE: ${{ secrets.TEST_ADMIN_PHONE }}
+          TEST_ADMIN_OTP: ${{ secrets.TEST_ADMIN_OTP }}
+        run: node tests/accessibility/run-accessibility.js
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: accessibility-report
+          path: tests/accessibility/results/
+
+  cleanup-preview:
+    name: Tear down preview
+    needs: [accessibility-tests]
+    if: always() && github.event_name == 'pull_request' && github.base_ref == 'a4i/staging'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+
+      - name: Remove preview subdir
+        run: |
+          sub='${{ github.head_ref }}'
+          sub="${sub//\//-}"
+          if [ -d "$sub" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git rm -rf "$sub"
+            git commit -m "Tear down accessibility preview for $sub"
+            git push
+          else
+            echo "No preview dir '$sub' on gh-pages, nothing to remove"
+          fi
+
   notify:
     runs-on: ubuntu-latest
     if: ${{ always() && github.event_name == 'push' && (github.ref_name == 'a4i/main' || github.ref_name == 'a4i/staging') }}
-    needs: [cicd-frontend, ci-api, ci-backend, cd-api, cd-backend, cd-api-prod, cd-backend-prod, cd-frontend-prod, smoke-tests, regression-tests, performance-tests]
+    needs: [cicd-frontend, ci-api, ci-backend, cd-api, cd-backend, cd-api-prod, cd-backend-prod, cd-frontend-prod, smoke-tests, regression-tests, performance-tests, accessibility-tests]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
