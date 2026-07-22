@@ -40,6 +40,27 @@ jobs:
     secrets:
       RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
 
+  integration-api:
+    name: API Integration Tests
+    needs: cd-api
+    if: github.event_name == 'push' && github.ref_name == 'a4i/staging'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        working-directory: shiksha-api/app-service
+        run: |
+          pip install poetry
+          poetry install
+      - name: Run integration tests
+        working-directory: shiksha-api/app-service
+        env:
+          SHIKSHA_BASE_URL: ${{ needs.cd-api.outputs['service-url'] }}
+        run: poetry run pytest tests/integration --no-cov
+
   cd-backend:
     needs: ci-backend
     if: github.event_name == 'push' && github.ref_name == 'a4i/staging'
