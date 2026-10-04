@@ -4,316 +4,995 @@
       "code": "TCH-001",
       "group": "teacher-session",
       "page": "/",
-      "action": "Sign in as Teacher with valid credentials and complete any required baseline survey.",
+      "action": "Sign in once using TEACHER_PHONE/TEST_PIN. If a baseline survey appears, choose Remind later when offered; otherwise complete it once with valid test responses. Wait for the permitted landing page. Keep this browser session for subsequent tests in the group. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
       "expected": "The teacher reaches Home or the first permitted page; teacher navigation is shown and admin navigation is hidden."
     },
     {
       "code": "TCH-002",
       "group": "teacher-session",
       "page": "/home",
-      "action": "Review the dashboard, open the lesson-plan generator, inspect recent plans, change the analytics period, and move between calendar months.",
-      "expected": "Dashboard data loads; each action updates the correct view or opens the correct route without errors."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Wait for the teacher dashboard to load and inspect its data. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Dashboard data loads without an error."
+    },
+    {
+      "code": "TCH-002-GENERATOR",
+      "group": "teacher-session",
+      "page": "/home",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Use the dashboard lesson-plan generator link. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The lesson-plan generation form opens."
+    },
+    {
+      "code": "TCH-002-RECENT",
+      "group": "teacher-session",
+      "page": "/home",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open one recent plan owned by this test account. If no recent plan exists, report skipped with that missing prerequisite. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The selected recent plan opens."
+    },
+    {
+      "code": "TCH-002-PERIOD",
+      "group": "teacher-session",
+      "page": "/home",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Change the analytics period and wait for the data to reload. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The selected period is reflected in the analytics view."
+    },
+    {
+      "code": "TCH-002-CALENDAR",
+      "group": "teacher-session",
+      "page": "/home",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Move the calendar forward one month and back. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The displayed month changes correctly in both directions."
     },
     {
       "code": "TCH-003",
       "group": "teacher-session",
       "page": "/profile",
-      "action": "View the teacher profile and try to edit the identity fields.",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. View the teacher profile and try to edit the identity fields. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
       "expected": "Identity fields are visible and remain read-only."
     },
     {
       "code": "TCH-003-CLASS",
       "group": "teacher-session",
       "page": "/profile",
-      "action": "Edit one permitted class or subject assignment, save, and reload the teacher profile.",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Edit one permitted class or subject assignment, save, and reload the teacher profile. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
       "expected": "The selected assignment persists after reload."
     },
     {
       "code": "TCH-003-RESOURCE",
       "group": "teacher-session",
       "page": "/profile",
-      "action": "Edit one permitted resource field, save, and reload the teacher profile.",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Edit one permitted resource field, save, and reload the teacher profile. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
       "expected": "The resource change persists after reload."
     },
     {
       "code": "TCH-003-UPLOAD",
       "group": "teacher-session",
       "page": "/profile",
-      "action": "Upload the provided profile.png fixture as the profile image and reload the teacher profile.",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Upload the provided profile.png fixture as the profile image and reload the teacher profile. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
       "expected": "The uploaded image is displayed and persists after reload."
     },
     {
       "code": "TCH-003-REMOVE",
       "group": "teacher-session",
       "page": "/profile",
-      "action": "Remove the uploaded profile image, confirm the removal, and reload the teacher profile.",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Remove the uploaded profile image, confirm the removal, and reload the teacher profile. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
       "expected": "The confirmation appears and the removed image remains absent after reload."
     },
     {
       "code": "TCH-004",
       "group": "teacher-session",
       "page": "/content-generation",
-      "action": "Search and filter saved content, open a lesson plan or resource, and use the empty-state Generate action when no records exist.",
-      "expected": "Search/filter results update correctly; content cards open the matching view; the empty state is clear and actionable."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Search saved content using a visible record's title. If this account has no saved content, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Results match the entered title."
+    },
+    {
+      "code": "TCH-004-FILTER",
+      "group": "teacher-session",
+      "page": "/content-generation",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Apply one available content filter and inspect the results. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Visible records match the selected filter."
+    },
+    {
+      "code": "TCH-004-OPEN",
+      "group": "teacher-session",
+      "page": "/content-generation",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open one saved content card. If no card exists, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The matching content view opens."
+    },
+    {
+      "code": "TCH-004-EMPTY",
+      "group": "teacher-session",
+      "page": "/content-generation",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Search for a unique nonexistent title and inspect the empty state. If it offers Generate, use it. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "An empty-state message is shown; an offered Generate action opens the generation form."
+    },
+    {
+      "code": "TCH-005-VALIDATION",
+      "group": "teacher-session",
+      "page": "/content-generation/lesson-plan",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Leave required selections incomplete and try to generate a lesson plan. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Generation is disabled or validation identifies the missing fields."
     },
     {
       "code": "TCH-005",
       "group": "teacher-session",
       "page": "/content-generation/lesson-plan",
-      "action": "Select board, grade, subject, chapter, topic, and learning outcome, then generate a lesson plan.",
-      "expected": "Required fields are enforced; valid selections enable generation; a generated lesson plan is created and its status is visible."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Choose valid board, grade, subject, chapter, topic, and learning outcome values; generate one lesson plan for this test account. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "A lesson plan is created and its generation status is visible."
     },
     {
       "code": "TCH-006",
       "group": "teacher-session",
       "page": "/content-generation/lesson-resources",
-      "action": "Select the required source fields and generate a lesson resource with activities, scenarios, questions, and comprehension levels.",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Select the required source fields and generate a lesson resource with activities, scenarios, questions, and comprehension levels. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
       "expected": "The resource is generated with the requested sections and appears in the content list."
     },
     {
       "code": "TCH-007",
       "group": "teacher-session",
-      "page": "/content-generation/inspect/:planType",
-      "action": "Edit a generated lesson plan or resource, save changes, add or remove media, and navigate away with unsaved changes.",
-      "expected": "Edits persist after save; media actions work; the draft guard warns before discarding unsaved changes."
+      "page": "/content-generation",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open the lesson plan generated by TCH-005, change one editable text field, save, and reload. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The saved text change persists."
+    },
+    {
+      "code": "TCH-007-MEDIA-ADD",
+      "group": "teacher-session",
+      "page": "/content-generation",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open that generated plan and add the supplied profile.png using its media upload control. If the selected content has no media control, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The uploaded media is displayed after save."
+    },
+    {
+      "code": "TCH-007-MEDIA-REMOVE",
+      "group": "teacher-session",
+      "page": "/content-generation",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Remove the media added by TCH-007-MEDIA-ADD and save. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The removed media is absent after reload."
+    },
+    {
+      "code": "TCH-007-DRAFT",
+      "group": "teacher-session",
+      "page": "/content-generation",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open that generated plan, change an editable text field without saving, and try to leave. Cancel the discard prompt. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "A discard warning appears and cancellation preserves the unsaved edit on the page."
     },
     {
       "code": "TCH-008",
       "group": "teacher-session",
       "page": "/content-generation",
-      "action": "Open a saved lesson plan or resource, view its documents/resources, download an available file, and delete it after confirmation.",
-      "expected": "The selected content opens; available downloads start; cancellation preserves the record and confirmed deletion removes it from the list."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open the plan generated by TCH-005 and inspect its available document or resource view. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The selected plan's content renders."
+    },
+    {
+      "code": "TCH-008-DOWNLOAD",
+      "group": "teacher-session",
+      "page": "/content-generation",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Download one available file from that generated plan. If no downloadable file is available, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "A file download is recorded by the browser."
+    },
+    {
+      "code": "TCH-008-CANCEL",
+      "group": "teacher-session",
+      "page": "/content-generation",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Request deletion of that generated plan, then cancel the confirmation. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The plan remains in the content list."
+    },
+    {
+      "code": "TCH-008-DELETE",
+      "group": "teacher-session",
+      "page": "/content-generation",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Delete that generated plan and confirm. Do not delete unrelated records. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The plan is removed from the content list."
+    },
+    {
+      "code": "TCH-009-DEPENDENCIES",
+      "group": "teacher-session",
+      "page": "/question-papers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Choose dependent source selections, then change their parent selection. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Dependent selections reset rather than retaining incompatible values."
+    },
+    {
+      "code": "TCH-009-VALIDATION",
+      "group": "teacher-session",
+      "page": "/question-papers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Try to continue or submit with required question-paper fields missing. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Validation blocks incomplete input."
+    },
+    {
+      "code": "TCH-009-PREVIEW",
+      "group": "teacher-session",
+      "page": "/question-papers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Enter valid paper selections and template data, then open the preview without submitting. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The preview renders without duplicate sections."
     },
     {
       "code": "TCH-009",
       "group": "teacher-session",
       "page": "/question-papers",
-      "action": "Create a question paper by selecting board, grade, subject, source, chapter, sub-topic when required, exam name, marks, and template steps; preview and submit.",
-      "expected": "Dependent selections reset correctly; validation blocks incomplete input; preview has no duplicate sections; submission creates a paper."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Create one paper for this account using valid source selections, exam name, marks, and template data; preview and submit. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Submission creates a question paper visible to this account."
     },
     {
       "code": "TCH-010",
       "group": "teacher-session",
-      "page": "/question-papers/view/:id",
-      "action": "Open a saved question paper, inspect sections and questions, download it, and submit feedback rating.",
-      "expected": "The paper renders its available content; download works; feedback selection saves without an error."
+      "page": "/question-papers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open the paper created by TCH-009. Do not use a literal :id URL. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The paper's sections and questions render."
+    },
+    {
+      "code": "TCH-010-DOWNLOAD",
+      "group": "teacher-session",
+      "page": "/question-papers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Download the paper created by TCH-009. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "A file download is recorded by the browser."
+    },
+    {
+      "code": "TCH-010-FEEDBACK",
+      "group": "teacher-session",
+      "page": "/question-papers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Choose and submit one feedback rating for the paper created by TCH-009. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The rating is saved without an error."
     },
     {
       "code": "TCH-011",
       "group": "teacher-session",
       "page": "/schedule",
-      "action": "Switch between My Schedules and Others' Schedules, move the calendar view, open an event, and view its lesson plan or details.",
-      "expected": "The correct schedule set is displayed; calendar navigation works; event actions open the matching details."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Switch between My Schedules and Others' Schedules. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The selected schedule view and its records change correctly."
+    },
+    {
+      "code": "TCH-011-CALENDAR",
+      "group": "teacher-session",
+      "page": "/schedule",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Move the schedule calendar to another period and back. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Calendar navigation changes the displayed period correctly."
+    },
+    {
+      "code": "TCH-011-EVENT",
+      "group": "teacher-session",
+      "page": "/schedule",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open one event visible to this account and use its details or lesson-plan action. If no event exists, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The event's matching details or lesson plan opens."
     },
     {
       "code": "TCH-012",
       "group": "teacher-session",
       "page": "/schedule",
-      "action": "Create a schedule entry, edit it, cancel the edit, and delete an entry after confirmation.",
-      "expected": "Valid schedule data is saved; cancellation leaves the entry unchanged; confirmed deletion removes it."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Create one valid schedule entry for this test account using the generated resource from TCH-006 where required. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The new entry appears in the selected calendar period."
+    },
+    {
+      "code": "TCH-012-EDIT",
+      "group": "teacher-session",
+      "page": "/schedule",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Edit that new schedule entry and save. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The changed schedule values persist."
+    },
+    {
+      "code": "TCH-012-CANCEL",
+      "group": "teacher-session",
+      "page": "/schedule",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Edit that entry again but cancel instead of saving. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The previously saved values remain unchanged."
+    },
+    {
+      "code": "TCH-012-DELETE",
+      "group": "teacher-session",
+      "page": "/schedule",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Delete that new schedule entry and confirm. Do not delete unrelated entries. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The entry is removed from the calendar."
     },
     {
       "code": "TCH-013",
       "group": "teacher-session",
       "page": "/help",
-      "action": "Open Help and FAQ, inspect the available video guides, and play an embedded guide.",
-      "expected": "Help content and FAQ are reachable; video iframes render; no broken or empty support page is shown."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open Help and inspect the available guide list. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Help content and guide choices are visible."
+    },
+    {
+      "code": "TCH-013-FAQ",
+      "group": "teacher-session",
+      "page": "/help",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Use the application's FAQ navigation. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The FAQ page displays its content."
+    },
+    {
+      "code": "TCH-013-VIDEO",
+      "group": "teacher-session",
+      "page": "/help",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Play one available embedded guide. If no guide is available, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The player loads and playback starts."
     },
     {
       "code": "TCH-014",
       "group": "teacher-session",
       "page": "/dashboard",
-      "action": "Navigate directly to admin dashboard, school, teacher, staff, role, content-activity, training, and audit-log routes as Teacher.",
-      "expected": "Each route is blocked or redirected because the Teacher lacks the required permission."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Navigate directly to the admin dashboard as Teacher. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The protected dashboard is blocked or redirected; protected data is not rendered."
+    },
+    {
+      "code": "TCH-014-SCHOOLS",
+      "group": "teacher-session",
+      "page": "/schools",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Navigate directly to Schools as Teacher. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The protected school list is blocked or redirected."
+    },
+    {
+      "code": "TCH-014-TEACHERS",
+      "group": "teacher-session",
+      "page": "/teachers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Navigate directly to Teachers as Teacher. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The protected teacher list is blocked or redirected."
+    },
+    {
+      "code": "TCH-014-STAFF",
+      "group": "teacher-session",
+      "page": "/staff",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Navigate directly to Staff as Teacher. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The protected staff list is blocked or redirected."
+    },
+    {
+      "code": "TCH-014-ROLES",
+      "group": "teacher-session",
+      "page": "/roles",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Navigate directly to Roles as Teacher. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The protected role list is blocked or redirected."
+    },
+    {
+      "code": "TCH-014-CONTENT",
+      "group": "teacher-session",
+      "page": "/content-activity",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Navigate directly to Content Activity as Teacher. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The protected activity list is blocked or redirected."
+    },
+    {
+      "code": "TCH-014-TRAINING",
+      "group": "teacher-session",
+      "page": "/training/view-batch",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Navigate directly to Training as Teacher. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The protected batch list is blocked or redirected."
+    },
+    {
+      "code": "TCH-014-AUDIT",
+      "group": "teacher-session",
+      "page": "/audit-log",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Navigate directly to Audit Log as Teacher. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The protected audit list is blocked or redirected."
+    },
+    {
+      "code": "ACL-001-TEACHER",
+      "group": "teacher-session",
+      "page": "/home",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open this permitted route directly using the current role session. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The permitted route renders without an access-denied redirect."
+    },
+    {
+      "code": "ACL-002-TEACHER",
+      "group": "teacher-session",
+      "page": "sidebar",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Reload the current permitted page and inspect sidebar links against the current role permissions. Do not change accounts. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Sidebar navigation remains consistent with this account's permissions after reload."
+    },
+    {
+      "code": "ACL-003-TEACHER",
+      "group": "teacher-session",
+      "page": "/roles",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Attempt to open this forbidden route directly, then use browser Back. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The forbidden route does not render protected data; Back returns to an allowed page."
     },
     {
       "code": "TCH-015",
       "group": "teacher-session",
       "page": "profile menu",
-      "action": "Open the profile menu and log out.",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open the profile menu and log out. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
       "expected": "The logout confirmation appears; confirmation ends the session and protected routes return to sign-in."
     },
     {
       "code": "PWR-001",
       "group": "power-teacher-session",
       "page": "/",
-      "action": "Sign in as Power Teacher with valid credentials and complete any required baseline survey.",
+      "action": "Sign in once using POWER_TEACHER_PHONE/TEST_PIN. If a baseline survey appears, choose Remind later when offered; otherwise complete it once with valid test responses. Wait for the permitted landing page. Keep this browser session for subsequent tests in the group. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
       "expected": "The Power Teacher reaches the teacher workspace and sees the teacher navigation plus Generation Status and Chatbot."
     },
     {
       "code": "PWR-002",
       "group": "power-teacher-session",
       "page": "/generation-status",
-      "action": "Review generation cards, status badges, empty state, and open an active, failed, draft, or completed item when available.",
-      "expected": "Statuses use the correct state labels; available actions open progress, draft, or completed content; empty state renders cleanly."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Inspect generation cards and their displayed states. If no cards exist, inspect the empty state. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Available cards show their status; an empty list has a clear empty-state message."
+    },
+    {
+      "code": "PWR-002-OPEN",
+      "group": "power-teacher-session",
+      "page": "/generation-status",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open one available generation card using its offered action. If no card exists, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The matching progress, draft, or completed content view opens."
+    },
+    {
+      "code": "PWR-003-EMPTY",
+      "group": "power-teacher-session",
+      "page": "/chat",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Attempt to send an empty chat message. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "No empty message is submitted."
+    },
+    {
+      "code": "PWR-003-SAMPLES",
+      "group": "power-teacher-session",
+      "page": "/chat",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open the sample instructions control. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Sample instructions are displayed."
     },
     {
       "code": "PWR-003",
       "group": "power-teacher-session",
       "page": "/chat",
-      "action": "Send a valid chat message, copy a response, open sample instructions, restart the chat, and try to send an empty message.",
-      "expected": "A valid message receives a response; copy and sample actions work; restart clears the conversation; empty input is rejected."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Send one valid short educational question and wait for the response. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "A nonempty assistant response appears."
     },
     {
-      "code": "PWR-004",
+      "code": "PWR-003-COPY",
       "group": "power-teacher-session",
-      "page": "/content-generation/presentation",
-      "action": "Verify that presentation generation is excluded from this UAT execution.",
-      "expected": "No presentation-generation action is executed or used as an acceptance criterion."
+      "page": "/chat",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Copy the response produced by PWR-003. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The copy action completes with its visible confirmation or clipboard result."
+    },
+    {
+      "code": "PWR-003-RESTART",
+      "group": "power-teacher-session",
+      "page": "/chat",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Restart the chat after that response, accepting its confirmation if present. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The visible conversation is cleared."
     },
     {
       "code": "PWR-005",
       "group": "power-teacher-session",
       "page": "/roles",
-      "action": "Navigate directly to an admin-only route as Power Teacher.",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Navigate directly to an admin-only route as Power Teacher. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
       "expected": "The route is blocked or redirected because Power Teacher has no admin-management permissions."
     },
     {
       "code": "ADM-001",
       "group": "admin-session",
       "page": "/",
-      "action": "Sign in as Admin with valid credentials and open the landing page.",
+      "action": "Sign in once using ADMIN_PHONE/TEST_PIN. If a baseline survey appears, choose Remind later when offered; otherwise complete it once with valid test responses. Wait for the permitted landing page. Keep this browser session for subsequent tests in the group. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
       "expected": "The Admin reaches the permitted admin workspace; analytics, school, teacher, staff, role, training, content activity, audit, profile, help, and FAQ navigation is available according to permissions."
     },
     {
       "code": "ADM-002",
       "group": "admin-session",
       "page": "/dashboard",
-      "action": "Open the analytics dashboard and inspect loading, error, dashboard, and scoped-data states.",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open the analytics dashboard and inspect loading, error, dashboard, and scoped-data states. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
       "expected": "Analytics loads for the Admin scope; loading and error states are clear; displayed data matches the assigned scope."
     },
     {
       "code": "ADM-003",
       "group": "admin-session",
       "page": "/schools",
-      "action": "List schools, search/filter and paginate, export the list, open a school, and use the more-options menu.",
-      "expected": "The list, filters, pagination, and export work; school details open; only permitted actions are enabled."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Wait for the school list and inspect the available permitted actions. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "School records load and only permitted actions are enabled."
+    },
+    {
+      "code": "ADM-003-SEARCH",
+      "group": "admin-session",
+      "page": "/schools",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Search or filter using one visible school's value. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Results match the entered value."
+    },
+    {
+      "code": "ADM-003-PAGINATION",
+      "group": "admin-session",
+      "page": "/schools",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Move to page 2 if available. If there is only one page, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The selected page and displayed records change."
+    },
+    {
+      "code": "ADM-003-EXPORT",
+      "group": "admin-session",
+      "page": "/schools",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Export the current school list. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "A school-list file download is recorded."
+    },
+    {
+      "code": "ADM-003-DETAIL",
+      "group": "admin-session",
+      "page": "/schools",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open one school from the visible list. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The selected school's details are displayed."
+    },
+    {
+      "code": "ADM-004-VALIDATION",
+      "group": "admin-session",
+      "page": "/schools/add",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Submit the school form with required fields missing. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Validation identifies the missing fields and no school is created."
     },
     {
       "code": "ADM-004",
       "group": "admin-session",
       "page": "/schools/add",
-      "action": "Create a school with valid details, facilities, holidays, classes, subjects, and resources; submit invalid and valid forms.",
-      "expected": "Validation identifies missing or invalid fields; valid data creates the school; the new school appears in the list."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Create a school named Veracity UAT followed by a unique suffix, using valid identity, facilities, holidays, class, subject, and resource values offered by the form. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The new school is created and appears in the list."
     },
     {
       "code": "ADM-005",
       "group": "admin-session",
-      "page": "/schools/:id",
-      "action": "Edit a school, add and remove facilities or holidays, save, and deactivate or reactivate a school after confirmation.",
-      "expected": "Edits persist; add/remove controls update the form; lifecycle actions require confirmation and update the school status."
+      "page": "/schools",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open the school created by ADM-004, edit one ordinary detail, save, and reload. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The saved detail persists."
+    },
+    {
+      "code": "ADM-005-FACILITY-ADD",
+      "group": "admin-session",
+      "page": "/schools",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Add one facility to the school created by ADM-004 and save. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The new facility is displayed after reload."
+    },
+    {
+      "code": "ADM-005-FACILITY-REMOVE",
+      "group": "admin-session",
+      "page": "/schools",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Remove the facility added by ADM-005-FACILITY-ADD and save. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "That facility is absent after reload."
+    },
+    {
+      "code": "ADM-005-HOLIDAY-ADD",
+      "group": "admin-session",
+      "page": "/schools",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Add one valid holiday to the school created by ADM-004 and save. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The holiday is displayed after reload."
+    },
+    {
+      "code": "ADM-005-HOLIDAY-REMOVE",
+      "group": "admin-session",
+      "page": "/schools",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Remove the holiday added by ADM-005-HOLIDAY-ADD and save. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "That holiday is absent after reload."
+    },
+    {
+      "code": "ADM-005-DEACTIVATE",
+      "group": "admin-session",
+      "page": "/schools",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Deactivate the school created by ADM-004 and confirm. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The school's status becomes inactive."
+    },
+    {
+      "code": "ADM-005-REACTIVATE",
+      "group": "admin-session",
+      "page": "/schools",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Reactivate that same school and confirm. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The school's status becomes active."
     },
     {
       "code": "ADM-006",
       "group": "admin-session",
       "page": "/teachers",
-      "action": "List teachers, search/filter and paginate, open a teacher, edit permitted fields, and save.",
-      "expected": "Teacher records load within scope; filters and pagination work; permitted edits persist; out-of-scope records are not exposed."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Wait for the teacher list and inspect the account's permitted scope. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Visible teacher records are within the Admin's assigned scope."
+    },
+    {
+      "code": "ADM-006-SEARCH",
+      "group": "admin-session",
+      "page": "/teachers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Search or filter using one visible teacher's value. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Results match the entered value."
+    },
+    {
+      "code": "ADM-006-PAGINATION",
+      "group": "admin-session",
+      "page": "/teachers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Move to page 2 if available. If there is only one page, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The selected page and displayed records change."
+    },
+    {
+      "code": "ADM-006-EDIT",
+      "group": "admin-session",
+      "page": "/teachers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open the disposable teacher identified by TEACHER_PHONE, edit one permitted non-role field, save, and reload. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The edited value persists; unrelated teacher records are unchanged."
+    },
+    {
+      "code": "ADM-007-VALIDATION",
+      "group": "admin-session",
+      "page": "/teachers/add",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Submit the teacher form with required fields missing. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Validation blocks creation and identifies missing fields."
     },
     {
       "code": "ADM-007",
       "group": "admin-session",
       "page": "/teachers/add",
-      "action": "Create a teacher with valid identity, school, profile, and role data, then submit invalid and valid forms.",
-      "expected": "Validation blocks incomplete data; a valid teacher is created with the selected role and school assignment."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Create a uniquely named Veracity UAT teacher with valid identity, school, profile, and role values; record the generated phone number for later checks. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The teacher is created with the selected role and school assignment."
+    },
+    {
+      "code": "ADM-008-IMPORT",
+      "group": "admin-session",
+      "page": "/teachers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Use bulk import with a supplied valid teacher-import spreadsheet. Do not use profile.png or invent a file. If no suitable spreadsheet is supplied, report skipped and name the missing fixture. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Valid imported teachers are created."
+    },
+    {
+      "code": "ADM-008-INVALID",
+      "group": "admin-session",
+      "page": "/teachers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Use bulk import with a supplied invalid teacher-import spreadsheet. If no suitable invalid spreadsheet is supplied, report skipped and name the missing fixture. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Invalid input is rejected with an explicit error."
     },
     {
       "code": "ADM-008",
       "group": "admin-session",
       "page": "/teachers",
-      "action": "Use teacher bulk import, export, deactivate, and reactivate actions with valid and invalid files or records.",
-      "expected": "Valid import creates records; invalid input reports the failure; export downloads scoped records; lifecycle actions update status after confirmation."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Export the current teacher list. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "A scoped teacher-report download is recorded."
+    },
+    {
+      "code": "ADM-008-DEACTIVATE",
+      "group": "admin-session",
+      "page": "/teachers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Deactivate the teacher created by ADM-007 and confirm. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "That teacher becomes inactive."
+    },
+    {
+      "code": "ADM-008-REACTIVATE",
+      "group": "admin-session",
+      "page": "/teachers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Reactivate the teacher created by ADM-007 and confirm. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "That teacher becomes active."
     },
     {
       "code": "ADM-009",
       "group": "admin-session",
       "page": "/staff",
-      "action": "List staff, search/filter and paginate, open a staff record, create or edit staff, and change lifecycle status.",
-      "expected": "Staff records and forms use the staff fields; valid changes persist; unauthorized actions are disabled or rejected."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Wait for the staff list and inspect the permitted actions. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Staff records and available actions match the Admin's scope and permissions."
+    },
+    {
+      "code": "ADM-009-SEARCH",
+      "group": "admin-session",
+      "page": "/staff",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Search or filter using one visible staff record's value. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Results match the entered value."
+    },
+    {
+      "code": "ADM-009-PAGINATION",
+      "group": "admin-session",
+      "page": "/staff",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Move to page 2 if available. If there is only one page, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The selected page and displayed records change."
+    },
+    {
+      "code": "ADM-009-CREATE",
+      "group": "admin-session",
+      "page": "/staff",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Create a uniquely named Veracity UAT staff member with the fields required by the staff form. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The new staff member appears in the list with the entered staff data."
+    },
+    {
+      "code": "ADM-009-EDIT",
+      "group": "admin-session",
+      "page": "/staff",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open the staff member created by ADM-009-CREATE, edit one permitted field, save, and reload. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The changed staff value persists."
+    },
+    {
+      "code": "ADM-009-LIFECYCLE",
+      "group": "admin-session",
+      "page": "/staff",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Change the lifecycle status of the staff member created by ADM-009-CREATE and confirm. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The status changes after confirmation."
     },
     {
       "code": "ADM-010",
       "group": "admin-session",
       "page": "/roles",
-      "action": "View roles and permissions, search permissions, view assigned users, create a role, edit a non-system role, and attempt to delete a system or assigned role.",
-      "expected": "Role and permission data loads; assigned users can be viewed; valid role changes persist; system roles and roles with users cannot be deleted."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open the role list and inspect one role's permissions. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Role and permission data is displayed."
+    },
+    {
+      "code": "ADM-010-SEARCH",
+      "group": "admin-session",
+      "page": "/roles",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Search permissions using a visible permission name. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Matching permissions are displayed."
+    },
+    {
+      "code": "ADM-010-USERS",
+      "group": "admin-session",
+      "page": "/roles",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open assigned users for one role. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The displayed users have that role assignment."
+    },
+    {
+      "code": "ADM-010-CREATE",
+      "group": "admin-session",
+      "page": "/roles",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Create a uniquely named Veracity UAT non-system role with valid permission selections. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The role is created with the selected permissions."
+    },
+    {
+      "code": "ADM-010-EDIT",
+      "group": "admin-session",
+      "page": "/roles",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Edit the non-system role created by ADM-010-CREATE and save. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The role change persists after reload."
+    },
+    {
+      "code": "ADM-010-SYSTEM",
+      "group": "admin-session",
+      "page": "/roles",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Attempt to delete a system role using only the provided UI control. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Deletion is unavailable or rejected; the system role remains."
+    },
+    {
+      "code": "ADM-010-ASSIGNED",
+      "group": "admin-session",
+      "page": "/roles",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Attempt to delete a role that has assigned users. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Deletion is unavailable or rejected; the assigned role remains."
     },
     {
       "code": "ADM-011",
       "group": "admin-session",
       "page": "/content-activity",
-      "action": "Search content history, apply state, zone, district, block, and school filters, open a completed lesson activity, and export results.",
-      "expected": "Filters update the activity list; completed content opens the matching lesson-plan activity; export downloads the scoped report."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Search content history using one visible record's value. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Results match the search value."
+    },
+    {
+      "code": "ADM-011-FILTER",
+      "group": "admin-session",
+      "page": "/content-activity",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Choose available state, zone, district, block, and school filters in order. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The activity list reflects the selected geographic scope."
+    },
+    {
+      "code": "ADM-011-OPEN",
+      "group": "admin-session",
+      "page": "/content-activity",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open one completed lesson activity. If none exists, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The matching lesson-plan activity opens."
+    },
+    {
+      "code": "ADM-011-EXPORT",
+      "group": "admin-session",
+      "page": "/content-activity",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Export the currently filtered activity report. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "A scoped activity-report download is recorded."
     },
     {
       "code": "ADM-012",
       "group": "admin-session",
       "page": "/training/view-batch",
-      "action": "List training batches, inspect statistics, search available teachers, open a batch, and use the participant panel.",
-      "expected": "Batch data and statistics load; teacher search and pagination work; batch details and participant controls match the Admin scope."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Wait for the training batch list and its statistics. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Batch data and statistics load for the Admin's scope."
+    },
+    {
+      "code": "ADM-012-SEARCH",
+      "group": "admin-session",
+      "page": "/training/view-batch",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Search available teachers with a visible teacher's value; use the next result page if offered. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Teacher search results match the query and offered pagination changes the results."
+    },
+    {
+      "code": "ADM-012-DETAIL",
+      "group": "admin-session",
+      "page": "/training/view-batch",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open one visible batch and its participant panel. If no batch exists, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The selected batch and its scoped participant list are displayed."
+    },
+    {
+      "code": "ADM-013-VALIDATION",
+      "group": "admin-session",
+      "page": "/training/create-batch",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Submit the batch form with required fields missing. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Validation blocks creation and identifies missing fields."
     },
     {
       "code": "ADM-013",
       "group": "admin-session",
       "page": "/training/create-batch",
-      "action": "Create a training batch with valid details and submit invalid and valid forms.",
-      "expected": "Validation blocks incomplete data; valid submission creates a batch and returns to the batch list."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Create a uniquely named Veracity UAT training batch with valid offered values. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The batch is created and appears in the batch list."
     },
     {
       "code": "ADM-014",
       "group": "admin-session",
-      "page": "/training/view-teachers/:batchId",
-      "action": "Assign and remove teachers, mark attendance, upload or remove batch media, save and submit the batch, and download attendance and teacher reports.",
-      "expected": "Assignments and attendance persist; media controls work; submitted-batch restrictions are enforced; reports download with the correct records."
+      "page": "/training/view-batch",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open the batch created by ADM-013 through the UI and assign the disposable teacher identified by TEACHER_PHONE. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The teacher appears as a participant after reload."
+    },
+    {
+      "code": "ADM-014-REMOVE",
+      "group": "admin-session",
+      "page": "/training/view-batch",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Remove that assigned teacher from the batch created by ADM-013. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The teacher is absent from the participant list after reload."
+    },
+    {
+      "code": "ADM-014-ATTENDANCE",
+      "group": "admin-session",
+      "page": "/training/view-batch",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Assign TEACHER_PHONE again to that batch, mark attendance, save, and reload. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The selected attendance value persists."
+    },
+    {
+      "code": "ADM-014-UPLOAD",
+      "group": "admin-session",
+      "page": "/training/view-batch",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Upload the supplied profile.png as media for that batch. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The media is displayed after saving."
+    },
+    {
+      "code": "ADM-014-MEDIA-REMOVE",
+      "group": "admin-session",
+      "page": "/training/view-batch",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Remove the media added by ADM-014-UPLOAD. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The removed media is absent after reload."
+    },
+    {
+      "code": "ADM-014-REPORT-ATTENDANCE",
+      "group": "admin-session",
+      "page": "/training/view-batch",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Download the attendance report for that batch. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "An attendance-report download is recorded with the batch's participants."
+    },
+    {
+      "code": "ADM-014-REPORT-TEACHERS",
+      "group": "admin-session",
+      "page": "/training/view-batch",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Download the teacher report for that batch. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "A teacher-report download is recorded with the batch's participants."
+    },
+    {
+      "code": "ADM-014-SUBMIT",
+      "group": "admin-session",
+      "page": "/training/view-batch",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Submit that batch, confirm, then inspect its available edit controls. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The batch is submitted and submitted-batch editing restrictions apply."
     },
     {
       "code": "ADM-015",
       "group": "admin-session",
       "page": "/audit-log",
-      "action": "Review audit entries, refresh the list, paginate, and open available log details or downloads.",
-      "expected": "Audit entries load; refresh and pagination work; in-progress, failed, and completed log states are clear; available logs can be downloaded."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Wait for the audit list to load and inspect the visible entry states. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Audit entries load and their available states are labeled."
+    },
+    {
+      "code": "ADM-015-REFRESH",
+      "group": "admin-session",
+      "page": "/audit-log",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Click Refresh once and wait for the loading indicator to finish. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The audit list reloads without an error."
+    },
+    {
+      "code": "ADM-015-PAGINATION",
+      "group": "admin-session",
+      "page": "/audit-log",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Select page 2 if offered and wait for loading to finish. If only one page exists, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Page 2 is selected and the record range and rows update."
+    },
+    {
+      "code": "ADM-015-DETAIL",
+      "group": "admin-session",
+      "page": "/audit-log",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open one entry's detail action if offered. If no detail action is available, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The selected entry's details open."
+    },
+    {
+      "code": "ADM-015-DOWNLOAD",
+      "group": "admin-session",
+      "page": "/audit-log",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Download one available completed log. If no download action is available, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "A log-file download is recorded."
     },
     {
       "code": "ADM-016",
       "group": "admin-session",
       "page": "/profile",
-      "action": "View and update the Admin profile where editing is permitted, then verify the saved values after reload.",
-      "expected": "The Admin can view the profile; permitted changes persist; protected identity fields remain read-only."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. View the Admin profile and attempt to edit protected identity fields. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The profile loads and protected identity fields remain read-only."
+    },
+    {
+      "code": "ADM-016-EDIT",
+      "group": "admin-session",
+      "page": "/profile",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Change one permitted editable field, save, and reload. If the profile offers no editable fields, report skipped. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The permitted change persists after reload."
     },
     {
       "code": "ADM-017",
       "group": "admin-session",
       "page": "/chat",
-      "action": "Navigate directly to teacher-only chat, content-generation, question-paper-generation, and schedule routes as Admin.",
-      "expected": "Routes requiring teacher-only permissions are blocked or redirected; Admin-only routes remain available."
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Navigate directly to Chat as Admin. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The teacher-only chat route is blocked or redirected."
+    },
+    {
+      "code": "ADM-017-CONTENT",
+      "group": "admin-session",
+      "page": "/content-generation",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Navigate directly to content generation as Admin. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The teacher-only content-generation route is blocked or redirected."
+    },
+    {
+      "code": "ADM-017-PAPER",
+      "group": "admin-session",
+      "page": "/question-papers",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Navigate directly to question papers as Admin. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The teacher-only question-paper route is blocked or redirected."
+    },
+    {
+      "code": "ADM-017-SCHEDULE",
+      "group": "admin-session",
+      "page": "/schedule",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Navigate directly to Schedule as Admin. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The teacher-only schedule route is blocked or redirected."
+    },
+    {
+      "code": "ACL-001-ADMIN",
+      "group": "admin-session",
+      "page": "/dashboard",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open this permitted route directly using the current role session. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The permitted route renders without an access-denied redirect."
+    },
+    {
+      "code": "ACL-002-ADMIN",
+      "group": "admin-session",
+      "page": "sidebar",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Reload the current permitted page and inspect sidebar links against the current role permissions. Do not change accounts. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Sidebar navigation remains consistent with this account's permissions after reload."
+    },
+    {
+      "code": "ACL-003-ADMIN",
+      "group": "admin-session",
+      "page": "/chat",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Attempt to open this forbidden route directly, then use browser Back. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The forbidden route does not render protected data; Back returns to an allowed page."
     },
     {
       "code": "ADM-018",
       "group": "admin-session",
       "page": "profile menu",
-      "action": "Open the profile menu and log out.",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open the profile menu and log out. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
       "expected": "The logout confirmation appears; confirmation ends the session and protected routes return to sign-in."
     },
     {
-      "code": "ACL-001",
-      "group": "access-control",
-      "page": "all protected routes",
-      "action": "For each role, open a permitted route, then open a route requiring a permission absent from that role by direct URL.",
-      "expected": "The permission guard enforces the same access decision for direct URLs as for sidebar links; unauthorized routes do not render protected data."
+      "code": "ACL-001-POWER",
+      "group": "power-teacher-session",
+      "page": "/generation-status",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Open this permitted route directly using the current role session. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The permitted route renders without an access-denied redirect."
     },
     {
-      "code": "ACL-002",
-      "group": "access-control",
-      "page": "role-specific navigation",
-      "action": "Compare Teacher, Power Teacher, and Admin sidebars after sign-in and after a page reload.",
-      "expected": "Navigation matches the role permissions; Power Teacher adds only its teacher extensions; Admin does not receive teacher-only generation controls."
+      "code": "ACL-002-POWER",
+      "group": "power-teacher-session",
+      "page": "sidebar",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Reload the current permitted page and inspect sidebar links against the current role permissions. Do not change accounts. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Sidebar navigation remains consistent with this account's permissions after reload."
     },
     {
-      "code": "ACL-003",
-      "group": "access-control",
-      "page": "session timeout and logout",
-      "action": "Log out, then attempt to revisit the last protected URL and use the browser back action.",
-      "expected": "The protected page is not accessible without a valid session; the user is redirected to sign-in."
+      "code": "ACL-003-POWER",
+      "group": "power-teacher-session",
+      "page": "/roles",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Attempt to open this forbidden route directly, then use browser Back. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The forbidden route does not render protected data; Back returns to an allowed page."
+    },
+    {
+      "code": "ANON-HOME",
+      "group": "logged-out-home",
+      "page": "/home",
+      "action": "Use this fresh browser profile without signing in. Open the protected route directly using the application hash URL. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Sign-in is shown and no protected data is rendered."
+    },
+    {
+      "code": "ANON-DASHBOARD",
+      "group": "logged-out-dashboard",
+      "page": "/dashboard",
+      "action": "Use this fresh browser profile without signing in. Open the protected route directly using the application hash URL. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Sign-in is shown and no protected data is rendered."
+    },
+    {
+      "code": "ANON-ROLES",
+      "group": "logged-out-roles",
+      "page": "/roles",
+      "action": "Use this fresh browser profile without signing in. Open the protected route directly using the application hash URL. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Sign-in is shown and no protected data is rendered."
     }
   ]
 }
