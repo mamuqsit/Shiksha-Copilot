@@ -1,0 +1,291 @@
+{
+  "tests": [
+    {
+      "code": "TCH-001",
+      "group": "teacher-session",
+      "page": "/",
+      "action": "Sign in as Teacher with valid credentials and complete any required baseline survey.",
+      "expected": "The teacher reaches Home or the first permitted page; teacher navigation is shown and admin navigation is hidden."
+    },
+    {
+      "code": "TCH-002",
+      "group": "teacher-session",
+      "page": "/home",
+      "action": "Review the dashboard, open the lesson-plan generator, inspect recent plans, change the analytics period, and move between calendar months.",
+      "expected": "Dashboard data loads; each action updates the correct view or opens the correct route without errors."
+    },
+    {
+      "code": "TCH-003",
+      "group": "teacher-session",
+      "page": "/profile",
+      "action": "View the profile, upload and remove a profile image, edit permitted class/resource details, and save.",
+      "expected": "Read-only identity fields remain protected; editable changes save and remain after reload; confirmation dialogs work for removals."
+    },
+    {
+      "code": "TCH-004",
+      "group": "teacher-session",
+      "page": "/content-generation",
+      "action": "Search and filter saved content, open a lesson plan or resource, and use the empty-state Generate action when no records exist.",
+      "expected": "Search/filter results update correctly; content cards open the matching view; the empty state is clear and actionable."
+    },
+    {
+      "code": "TCH-005",
+      "group": "teacher-session",
+      "page": "/content-generation/lesson-plan",
+      "action": "Select board, grade, subject, chapter, topic, and learning outcome, then generate a lesson plan.",
+      "expected": "Required fields are enforced; valid selections enable generation; a generated lesson plan is created and its status is visible."
+    },
+    {
+      "code": "TCH-006",
+      "group": "teacher-session",
+      "page": "/content-generation/lesson-resources",
+      "action": "Select the required source fields and generate a lesson resource with activities, scenarios, questions, and comprehension levels.",
+      "expected": "The resource is generated with the requested sections and appears in the content list."
+    },
+    {
+      "code": "TCH-007",
+      "group": "teacher-session",
+      "page": "/content-generation/inspect/:planType",
+      "action": "Edit a generated lesson plan or resource, save changes, add or remove media, and navigate away with unsaved changes.",
+      "expected": "Edits persist after save; media actions work; the draft guard warns before discarding unsaved changes."
+    },
+    {
+      "code": "TCH-008",
+      "group": "teacher-session",
+      "page": "/content-generation",
+      "action": "Open a saved lesson plan or resource, view its documents/resources, download an available file, and delete it after confirmation.",
+      "expected": "The selected content opens; available downloads start; cancellation preserves the record and confirmed deletion removes it from the list."
+    },
+    {
+      "code": "TCH-009",
+      "group": "teacher-session",
+      "page": "/question-papers",
+      "action": "Create a question paper by selecting board, grade, subject, source, chapter, sub-topic when required, exam name, marks, and template steps; preview and submit.",
+      "expected": "Dependent selections reset correctly; validation blocks incomplete input; preview has no duplicate sections; submission creates a paper."
+    },
+    {
+      "code": "TCH-010",
+      "group": "teacher-session",
+      "page": "/question-papers/view/:id",
+      "action": "Open a saved question paper, inspect sections and questions, download it, and submit feedback rating.",
+      "expected": "The paper renders its available content; download works; feedback selection saves without an error."
+    },
+    {
+      "code": "TCH-011",
+      "group": "teacher-session",
+      "page": "/schedule",
+      "action": "Switch between My Schedules and Others' Schedules, move the calendar view, open an event, and view its lesson plan or details.",
+      "expected": "The correct schedule set is displayed; calendar navigation works; event actions open the matching details."
+    },
+    {
+      "code": "TCH-012",
+      "group": "teacher-session",
+      "page": "/schedule",
+      "action": "Create a schedule entry, edit it, cancel the edit, and delete an entry after confirmation.",
+      "expected": "Valid schedule data is saved; cancellation leaves the entry unchanged; confirmed deletion removes it."
+    },
+    {
+      "code": "TCH-013",
+      "group": "teacher-session",
+      "page": "/help",
+      "action": "Open Help and FAQ, inspect the available video guides, and play an embedded guide.",
+      "expected": "Help content and FAQ are reachable; video iframes render; no broken or empty support page is shown."
+    },
+    {
+      "code": "TCH-014",
+      "group": "teacher-session",
+      "page": "/dashboard",
+      "action": "Navigate directly to admin dashboard, school, teacher, staff, role, content-activity, training, and audit-log routes as Teacher.",
+      "expected": "Each route is blocked or redirected because the Teacher lacks the required permission."
+    },
+    {
+      "code": "TCH-015",
+      "group": "teacher-session",
+      "page": "profile menu",
+      "action": "Open the profile menu and log out.",
+      "expected": "The logout confirmation appears; confirmation ends the session and protected routes return to sign-in."
+    },
+    {
+      "code": "PWR-001",
+      "group": "power-teacher-session",
+      "page": "/",
+      "action": "Sign in as Power Teacher with valid credentials and complete any required baseline survey.",
+      "expected": "The Power Teacher reaches the teacher workspace and sees the teacher navigation plus Generation Status and Chatbot."
+    },
+    {
+      "code": "PWR-002",
+      "group": "power-teacher-session",
+      "page": "/generation-status",
+      "action": "Review generation cards, status badges, empty state, and open an active, failed, draft, or completed item when available.",
+      "expected": "Statuses use the correct state labels; available actions open progress, draft, or completed content; empty state renders cleanly."
+    },
+    {
+      "code": "PWR-003",
+      "group": "power-teacher-session",
+      "page": "/chat",
+      "action": "Send a valid chat message, copy a response, open sample instructions, restart the chat, and try to send an empty message.",
+      "expected": "A valid message receives a response; copy and sample actions work; restart clears the conversation; empty input is rejected."
+    },
+    {
+      "code": "PWR-004",
+      "group": "power-teacher-session",
+      "page": "/content-generation/presentation",
+      "action": "Verify that presentation generation is excluded from this UAT execution.",
+      "expected": "No presentation-generation action is executed or used as an acceptance criterion."
+    },
+    {
+      "code": "PWR-005",
+      "group": "power-teacher-session",
+      "page": "/roles",
+      "action": "Navigate directly to an admin-only route as Power Teacher.",
+      "expected": "The route is blocked or redirected because Power Teacher has no admin-management permissions."
+    },
+    {
+      "code": "ADM-001",
+      "group": "admin-session",
+      "page": "/",
+      "action": "Sign in as Admin with valid credentials and open the landing page.",
+      "expected": "The Admin reaches the permitted admin workspace; analytics, school, teacher, staff, role, training, content activity, audit, profile, help, and FAQ navigation is available according to permissions."
+    },
+    {
+      "code": "ADM-002",
+      "group": "admin-session",
+      "page": "/dashboard",
+      "action": "Open the analytics dashboard and inspect loading, error, dashboard, and scoped-data states.",
+      "expected": "Analytics loads for the Admin scope; loading and error states are clear; displayed data matches the assigned scope."
+    },
+    {
+      "code": "ADM-003",
+      "group": "admin-session",
+      "page": "/schools",
+      "action": "List schools, search/filter and paginate, export the list, open a school, and use the more-options menu.",
+      "expected": "The list, filters, pagination, and export work; school details open; only permitted actions are enabled."
+    },
+    {
+      "code": "ADM-004",
+      "group": "admin-session",
+      "page": "/schools/add",
+      "action": "Create a school with valid details, facilities, holidays, classes, subjects, and resources; submit invalid and valid forms.",
+      "expected": "Validation identifies missing or invalid fields; valid data creates the school; the new school appears in the list."
+    },
+    {
+      "code": "ADM-005",
+      "group": "admin-session",
+      "page": "/schools/:id",
+      "action": "Edit a school, add and remove facilities or holidays, save, and deactivate or reactivate a school after confirmation.",
+      "expected": "Edits persist; add/remove controls update the form; lifecycle actions require confirmation and update the school status."
+    },
+    {
+      "code": "ADM-006",
+      "group": "admin-session",
+      "page": "/teachers",
+      "action": "List teachers, search/filter and paginate, open a teacher, edit permitted fields, and save.",
+      "expected": "Teacher records load within scope; filters and pagination work; permitted edits persist; out-of-scope records are not exposed."
+    },
+    {
+      "code": "ADM-007",
+      "group": "admin-session",
+      "page": "/teachers/add",
+      "action": "Create a teacher with valid identity, school, profile, and role data, then submit invalid and valid forms.",
+      "expected": "Validation blocks incomplete data; a valid teacher is created with the selected role and school assignment."
+    },
+    {
+      "code": "ADM-008",
+      "group": "admin-session",
+      "page": "/teachers",
+      "action": "Use teacher bulk import, export, deactivate, and reactivate actions with valid and invalid files or records.",
+      "expected": "Valid import creates records; invalid input reports the failure; export downloads scoped records; lifecycle actions update status after confirmation."
+    },
+    {
+      "code": "ADM-009",
+      "group": "admin-session",
+      "page": "/staff",
+      "action": "List staff, search/filter and paginate, open a staff record, create or edit staff, and change lifecycle status.",
+      "expected": "Staff records and forms use the staff fields; valid changes persist; unauthorized actions are disabled or rejected."
+    },
+    {
+      "code": "ADM-010",
+      "group": "admin-session",
+      "page": "/roles",
+      "action": "View roles and permissions, search permissions, view assigned users, create a role, edit a non-system role, and attempt to delete a system or assigned role.",
+      "expected": "Role and permission data loads; assigned users can be viewed; valid role changes persist; system roles and roles with users cannot be deleted."
+    },
+    {
+      "code": "ADM-011",
+      "group": "admin-session",
+      "page": "/content-activity",
+      "action": "Search content history, apply state, zone, district, block, and school filters, open a completed lesson activity, and export results.",
+      "expected": "Filters update the activity list; completed content opens the matching lesson-plan activity; export downloads the scoped report."
+    },
+    {
+      "code": "ADM-012",
+      "group": "admin-session",
+      "page": "/training/view-batch",
+      "action": "List training batches, inspect statistics, search available teachers, open a batch, and use the participant panel.",
+      "expected": "Batch data and statistics load; teacher search and pagination work; batch details and participant controls match the Admin scope."
+    },
+    {
+      "code": "ADM-013",
+      "group": "admin-session",
+      "page": "/training/create-batch",
+      "action": "Create a training batch with valid details and submit invalid and valid forms.",
+      "expected": "Validation blocks incomplete data; valid submission creates a batch and returns to the batch list."
+    },
+    {
+      "code": "ADM-014",
+      "group": "admin-session",
+      "page": "/training/view-teachers/:batchId",
+      "action": "Assign and remove teachers, mark attendance, upload or remove batch media, save and submit the batch, and download attendance and teacher reports.",
+      "expected": "Assignments and attendance persist; media controls work; submitted-batch restrictions are enforced; reports download with the correct records."
+    },
+    {
+      "code": "ADM-015",
+      "group": "admin-session",
+      "page": "/audit-log",
+      "action": "Review audit entries, refresh the list, paginate, and open available log details or downloads.",
+      "expected": "Audit entries load; refresh and pagination work; in-progress, failed, and completed log states are clear; available logs can be downloaded."
+    },
+    {
+      "code": "ADM-016",
+      "group": "admin-session",
+      "page": "/profile",
+      "action": "View and update the Admin profile where editing is permitted, then verify the saved values after reload.",
+      "expected": "The Admin can view the profile; permitted changes persist; protected identity fields remain read-only."
+    },
+    {
+      "code": "ADM-017",
+      "group": "admin-session",
+      "page": "/chat",
+      "action": "Navigate directly to teacher-only chat, content-generation, question-paper-generation, and schedule routes as Admin.",
+      "expected": "Routes requiring teacher-only permissions are blocked or redirected; Admin-only routes remain available."
+    },
+    {
+      "code": "ADM-018",
+      "group": "admin-session",
+      "page": "profile menu",
+      "action": "Open the profile menu and log out.",
+      "expected": "The logout confirmation appears; confirmation ends the session and protected routes return to sign-in."
+    },
+    {
+      "code": "ACL-001",
+      "group": "access-control",
+      "page": "all protected routes",
+      "action": "For each role, open a permitted route, then open a route requiring a permission absent from that role by direct URL.",
+      "expected": "The permission guard enforces the same access decision for direct URLs as for sidebar links; unauthorized routes do not render protected data."
+    },
+    {
+      "code": "ACL-002",
+      "group": "access-control",
+      "page": "role-specific navigation",
+      "action": "Compare Teacher, Power Teacher, and Admin sidebars after sign-in and after a page reload.",
+      "expected": "Navigation matches the role permissions; Power Teacher adds only its teacher extensions; Admin does not receive teacher-only generation controls."
+    },
+    {
+      "code": "ACL-003",
+      "group": "access-control",
+      "page": "session timeout and logout",
+      "action": "Log out, then attempt to revisit the last protected URL and use the browser back action.",
+      "expected": "The protected page is not accessible without a valid session; the user is redirected to sign-in."
+    }
+  ]
+}
