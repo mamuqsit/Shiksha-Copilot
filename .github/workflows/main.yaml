@@ -488,7 +488,7 @@ jobs:
         with:
           url: ${{ needs.cicd-frontend.outputs.page_url }}
           plan: uat.json
-          model: openai:gpt-6.1-sol # Default: openai:gpt-5.6-luna
+          model: openai:gpt-5.6-luna
           secrets: |
             SU_PHONE
             SU_PIN
