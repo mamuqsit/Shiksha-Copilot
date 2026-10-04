@@ -18,8 +18,36 @@
       "code": "TCH-003",
       "group": "teacher-session",
       "page": "/profile",
-      "action": "View the profile, upload and remove a profile image, edit permitted class/resource details, and save.",
-      "expected": "Read-only identity fields remain protected; editable changes save and remain after reload; confirmation dialogs work for removals."
+      "action": "View the teacher profile and try to edit the identity fields.",
+      "expected": "Identity fields are visible and remain read-only."
+    },
+    {
+      "code": "TCH-003-CLASS",
+      "group": "teacher-session",
+      "page": "/profile",
+      "action": "Edit one permitted class or subject assignment, save, and reload the teacher profile.",
+      "expected": "The selected assignment persists after reload."
+    },
+    {
+      "code": "TCH-003-RESOURCE",
+      "group": "teacher-session",
+      "page": "/profile",
+      "action": "Edit one permitted resource field, save, and reload the teacher profile.",
+      "expected": "The resource change persists after reload."
+    },
+    {
+      "code": "TCH-003-UPLOAD",
+      "group": "teacher-session",
+      "page": "/profile",
+      "action": "Upload the provided profile.png fixture as the profile image and reload the teacher profile.",
+      "expected": "The uploaded image is displayed and persists after reload."
+    },
+    {
+      "code": "TCH-003-REMOVE",
+      "group": "teacher-session",
+      "page": "/profile",
+      "action": "Remove the uploaded profile image, confirm the removal, and reload the teacher profile.",
+      "expected": "The confirmation appears and the removed image remains absent after reload."
     },
     {
       "code": "TCH-004",
