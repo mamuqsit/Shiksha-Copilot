@@ -436,10 +436,10 @@ jobs:
 
           gh pr comment "$PR_NUMBER" --body-file "$BODY"
 
-  uat:
+  uat-tests:
     name: User acceptance tests
     needs: [cicd-frontend, cd-backend, health-check]
-    if: github.event_name == 'push' && github.ref_name == 'a4i/staging'
+    if: always() && needs.health-check.result == 'success' && github.event_name == 'push' && github.ref_name == 'a4i/staging'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
