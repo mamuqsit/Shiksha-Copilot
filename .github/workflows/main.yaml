@@ -436,6 +436,86 @@ jobs:
 
           gh pr comment "$PR_NUMBER" --body-file "$BODY"
 
+  uat:
+    name: User acceptance tests
+    needs: [cicd-frontend, cd-backend, health-check]
+    if: github.event_name == 'push' && github.ref_name == 'a4i/staging'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    env:
+      BACKEND_URL: ${{ format('{0}/api', needs.cd-backend.outputs['service-url']) }}
+      SU_PHONE: ${{ vars.UAT_USERNAME }}
+      SU_PIN: ${{ secrets.UAT_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create disposable UAT accounts
+        id: accounts
+        shell: bash
+        run: |
+          token=$(jq -nc --arg phone "$SU_PHONE" --arg otp "$SU_PIN" '{phone:$phone,otp:$otp}' |
+            curl -fsS "$BACKEND_URL/auth/validate-otp" -H 'Content-Type: application/json' --data-binary @- | jq -er '.data.token')
+          echo "::add-mask::$token"
+          echo "UAT_TOKEN=$token" >> "$GITHUB_ENV"
+          auth=(-H "Authorization: $token" -H 'Content-Type: application/json')
+          api() { curl -fsS "$BACKEND_URL$1" "${auth[@]}" "${@:2}"; }
+          school=$(api '/school/list?limit=1&includeDeleted=0' | jq -er '.data.results[0]._id')
+          : > "$RUNNER_TEMP/uat-users"
+          echo 'cleanup=true' >> "$GITHUB_OUTPUT"
+          seed=$(shuf -i 0-999999996 -n 1)
+          TEACHER_PHONE=$(printf '9%09d' "$seed")
+          POWER_TEACHER_PHONE=$(printf '9%09d' "$((seed + 1))")
+          ADMIN_PHONE=$(printf '9%09d' "$((seed + 2))")
+          TEST_PIN=$(shuf -i 1000-9999 -n 1)
+          echo "::add-mask::$TEST_PIN"
+          printf 'TEACHER_PHONE=%s\nPOWER_TEACHER_PHONE=%s\nADMIN_PHONE=%s\nTEST_PIN=%s\n' \
+            "$TEACHER_PHONE" "$POWER_TEACHER_PHONE" "$ADMIN_PHONE" "$TEST_PIN" >> "$GITHUB_ENV"
+          create() {
+            id=$(jq -nc --arg name "$1" --arg phone "$2" --arg role "$3" --arg school "$school" --arg profile "$4" \
+              '{identity:{name:$name,phone:$phone,email:"",address:""},roles:[{roleId:$role,dep:(if $profile=="teacher" then $school else null end)}],profiles:(if $profile=="teacher" then {teacher:{facilities:[],classes:[],isProfileCompleted:false}} else {admin:{state:null}} end)}' |
+              api /users --data-binary @- | jq -er '.data._id')
+            echo "$id" >> "$RUNNER_TEMP/uat-users"
+            jq -nc --arg userId "$id" --arg pin "$TEST_PIN" '{userId:$userId,pin:$pin}' |
+              api /devtools/auth/reset --data-binary @- | jq -e .success >/dev/null
+          }
+          create 'Veracity Teacher' "$TEACHER_PHONE" 7368696b7368615f74636872 teacher
+          create 'Veracity Power Teacher' "$POWER_TEACHER_PHONE" 7368696b7368615f70777221 teacher
+          create 'Veracity Admin' "$ADMIN_PHONE" 7368696b7368615f61646d6e admin
+
+      - uses: mamuqsit/veracity@main
+        with:
+          url: ${{ needs.cicd-frontend.outputs.page_url }}
+          plan: uat.json
+          model: openai:gpt-6.1-sol # Default: openai:gpt-5.6-luna
+          secrets: |
+            SU_PHONE
+            SU_PIN
+            BACKEND_URL
+            TEACHER_PHONE
+            POWER_TEACHER_PHONE
+            ADMIN_PHONE
+            TEST_PIN
+          instruction: >-
+            Accounts: superuser SU_PHONE/SU_PIN, teacher TEACHER_PHONE/TEST_PIN,
+            power teacher POWER_TEACHER_PHONE/TEST_PIN, admin ADMIN_PHONE/TEST_PIN.
+            The backend is at BACKEND_URL. Use these existing disposable accounts
+            for role-specific tests.
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ vars.OPENAI_BASE_URL }}
+
+      - name: Delete disposable UAT accounts
+        if: ${{ always() && steps.accounts.outputs.cleanup == 'true' }}
+        shell: bash
+        run: |
+          jq -Rsc '{users:(split("\n") | map(select(length > 0))),roles:[],schools:[],classes:[],auditLogs:[],content:[],activities:[],batches:[]}' \
+            "$RUNNER_TEMP/uat-users" |
+            curl -fsS "$BACKEND_URL/devtools/fixtures" -X DELETE \
+              -H "Authorization: $UAT_TOKEN" -H 'Content-Type: application/json' --data-binary @- |
+            jq -e .success >/dev/null
+
   notify:
     runs-on: ubuntu-latest
     if: ${{ always() && github.event_name == 'push' && (github.ref_name == 'a4i/main' || github.ref_name == 'a4i/staging') }}
