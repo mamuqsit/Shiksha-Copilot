@@ -1,0 +1,88 @@
+{
+  "tests": [
+    {
+      "code": "TCH-001",
+      "group": "teacher-session",
+      "page": "/",
+      "action": "Sign in once using TEACHER_PHONE/TEST_PIN. If a baseline survey appears, choose Remind later when offered; otherwise complete it once with valid test responses. Wait for the permitted landing page. Keep this browser session for subsequent tests in the group. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The teacher reaches Home or the first permitted page; teacher navigation is shown and admin navigation is hidden."
+    },
+    {
+      "code": "TCH-002",
+      "group": "teacher-session",
+      "page": "/home",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Wait for the teacher dashboard to load and inspect its data. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Dashboard data loads without an error."
+    },
+    {
+      "code": "TCH-003",
+      "group": "teacher-session",
+      "page": "/profile",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. View the teacher profile and try to edit the identity fields. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Identity fields are visible and remain read-only."
+    },
+    {
+      "code": "TCH-005-VALIDATION",
+      "group": "teacher-session",
+      "page": "/content-generation/lesson-plan",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Leave required selections incomplete and try to generate a lesson plan. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Generation is disabled or validation identifies the missing fields."
+    },
+    {
+      "code": "PWR-001",
+      "group": "power-teacher-session",
+      "page": "/",
+      "action": "Sign in once using POWER_TEACHER_PHONE/TEST_PIN. If a baseline survey appears, choose Remind later when offered; otherwise complete it once with valid test responses. Wait for the permitted landing page. Keep this browser session for subsequent tests in the group. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The Power Teacher reaches the teacher workspace and sees the teacher navigation plus Generation Status and Chatbot."
+    },
+    {
+      "code": "PWR-002",
+      "group": "power-teacher-session",
+      "page": "/generation-status",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Inspect generation cards and their displayed states. If no cards exist, inspect the empty state. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Available cards show their status; an empty list has a clear empty-state message."
+    },
+    {
+      "code": "ADM-001",
+      "group": "admin-session",
+      "page": "/",
+      "action": "Sign in once using ADMIN_PHONE/TEST_PIN. If a baseline survey appears, choose Remind later when offered; otherwise complete it once with valid test responses. Wait for the permitted landing page. Keep this browser session for subsequent tests in the group. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The Admin reaches the permitted admin workspace; analytics, school, teacher, staff, role, training, content activity, audit, profile, help, and FAQ navigation is available according to permissions."
+    },
+    {
+      "code": "ADM-016",
+      "group": "admin-session",
+      "page": "/profile",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. View the Admin profile and attempt to edit protected identity fields. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The profile loads and protected identity fields remain read-only."
+    },
+    {
+      "code": "ADM-017",
+      "group": "admin-session",
+      "page": "/chat",
+      "action": "Reuse the authenticated session from this group; sign in again only if it has expired. Navigate directly to Chat as Admin. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "The teacher-only chat route is blocked or redirected."
+    },
+    {
+      "code": "ANON-HOME",
+      "group": "logged-out-home",
+      "page": "/home",
+      "action": "Use this fresh browser profile without signing in. Open the protected route directly using the application hash URL. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Sign-in is shown and no protected data is rendered."
+    },
+    {
+      "code": "ANON-DASHBOARD",
+      "group": "logged-out-dashboard",
+      "page": "/dashboard",
+      "action": "Use this fresh browser profile without signing in. Open the protected route directly using the application hash URL. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Sign-in is shown and no protected data is rendered."
+    },
+    {
+      "code": "ANON-ROLES",
+      "group": "logged-out-roles",
+      "page": "/roles",
+      "action": "Use this fresh browser profile without signing in. Open the protected route directly using the application hash URL. Use hash routes (#/...) for direct navigation; resolve record IDs through the UI instead of using placeholder URLs. Report skipped if an explicitly required record or fixture is absent. Do not generate presentations.",
+      "expected": "Sign-in is shown and no protected data is rendered."
+    }
+  ]
+}
