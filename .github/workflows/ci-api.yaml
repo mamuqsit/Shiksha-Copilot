@@ -107,8 +107,8 @@ jobs:
           load: true
           build-args: SHIKSHA_COPILOT_BUILD=${{ github.sha }}
           # registry cache dedups unchanged layers by digest, gha cache doesn't
-          cache-from: type=registry,ref=ghcr.io/a4i-tech/shiksha-copilot/api:buildcache
-          cache-to: type=registry,ref=ghcr.io/a4i-tech/shiksha-copilot/api:buildcache,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.API_IMAGE_NAME }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.API_IMAGE_NAME }}:buildcache,mode=max
 
       - name: Upload coverage reports
         if: always()
