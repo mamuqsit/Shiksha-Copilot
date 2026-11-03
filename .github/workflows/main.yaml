@@ -107,30 +107,22 @@ jobs:
 
   health-check:
     name: Health Check
-    # Prod only, staging CD notification is separate work.
-    needs: [cd-frontend-prod, cd-api-prod, cd-backend-prod]
+    needs: [cicd-frontend, cd-api, cd-backend, cd-frontend-prod, cd-api-prod, cd-backend-prod]
     if: |
       always() &&
-      github.event_name == 'push' && github.ref_name == 'a4i/main' &&
-      needs.cd-frontend-prod.result == 'success' &&
-      needs.cd-api-prod.result == 'success' &&
-      needs.cd-backend-prod.result == 'success'
+      github.event_name == 'push' &&
+      (needs.cicd-frontend.result == 'success' || needs.cd-frontend-prod.result == 'success') &&
+      (needs.cd-api.result == 'success' || needs.cd-api-prod.result == 'success') &&
+      (needs.cd-backend.result == 'success' || needs.cd-backend-prod.result == 'success')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Resolve URLs
-        id: urls
-        run: |
-          echo "frontend=${{ needs.cd-frontend-prod.outputs.page_url }}" >> $GITHUB_OUTPUT
-          echo "backend=${{ needs.cd-backend-prod.outputs['service-url'] }}" >> $GITHUB_OUTPUT
-          echo "api=${{ needs.cd-api-prod.outputs['service-url'] }}" >> $GITHUB_OUTPUT
-
       - name: Verify Services
         env:
           EXPECTED_BUILD: ${{ github.sha }}
-          FRONTEND_URL: ${{ steps.urls.outputs.frontend }}
-          BACKEND_URL: ${{ steps.urls.outputs.backend }}
-          API_URL: ${{ steps.urls.outputs.api }}
+          FRONTEND_URL: ${{ needs.cicd-frontend.outputs.page_url || needs.cd-frontend-prod.outputs.page_url }}
+          BACKEND_URL: ${{ needs.cd-backend.outputs['service-url'] || needs.cd-backend-prod.outputs['service-url'] }}
+          API_URL: ${{ needs.cd-api.outputs['service-url'] || needs.cd-api-prod.outputs['service-url'] }}
         run: |
           trap 'echo "Cancelled"; exit 1' TERM INT
 
@@ -231,12 +223,15 @@ jobs:
 
   uat-tests:
     name: User acceptance tests
-    needs: [cicd-frontend, cd-backend, cd-api]
-    if: github.event_name == 'push' && github.ref_name == 'a4i/staging'
+    needs: [cicd-frontend, cd-backend, cd-api, health-check]
+    if: always() && needs.health-check.result == 'success' && github.event_name == 'push' && github.ref_name == 'a4i/staging'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
-      contents: read
+      contents: write
+    concurrency:
+      group: veracity-${{ github.head_ref || github.ref_name }}
+      cancel-in-progress: false
     env:
       BACKEND_URL: ${{ format('{0}/api', needs.cd-backend.outputs['service-url']) }}
       SU_PHONE: ${{ vars.UAT_USERNAME }}
