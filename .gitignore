@@ -29,3 +29,6 @@ superset/.env
 # Accessibility tests
 tests/accessibility/node_modules
 tests/accessibility/results
+.veracity/act/
+veracity-output/
+tests/uat/node_modules/
